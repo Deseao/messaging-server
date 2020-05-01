@@ -1,5 +1,7 @@
 package state
 
+import "time"
+
 var GlobalState State
 
 func MakeGlobalState() *State {
@@ -13,7 +15,8 @@ type State struct {
 }
 
 type Subscriber struct {
-	Number string
+	Number   string
+	LastSent time.Time
 }
 
 func (s *State) AddSubscriber(number string) {

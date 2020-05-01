@@ -33,6 +33,9 @@ func main() {
 	logger.Info("Initializing subscriber list")
 	GlobalState = state.MakeGlobalState()
 
+	logger.Info("Starting subscription queue...")
+	go messaging.RunQueue(logger, GlobalState, cfg.FreeClimb)
+
 	logger.Info("initializing server...", zap.String("acceptAddr", cfg.Server.Accept), zap.String("port", cfg.Server.Port), zap.Bool("https", cfg.Server.Secure))
 	serverCfg := &server.Config{
 		Production: cfg.Logger.Production,
@@ -41,8 +44,6 @@ func main() {
 		Port:       cfg.Server.Port,
 		State:      GlobalState,
 	}
-
-	messaging.Send(cfg.FreeClimb.AccountID, cfg.FreeClimb.AuthToken, cfg.FreeClimb.From, cfg.FreeClimb.To)
 
 	s := StartServer(serverCfg, cfg.Server.Secure, cfg.Server.CertFile, cfg.Server.KeyFile)
 
