@@ -10,6 +10,7 @@ import (
 	"go.uber.org/zap"
 
 	"github.com/Deseao/messaging-server/internal/server/handlers"
+	"github.com/Deseao/messaging-server/internal/server/middleware"
 )
 
 type Config struct {
@@ -31,6 +32,7 @@ func New(cfg *Config) *Server {
 	routes := gin.New()
 	//TODO: Gin.Recovery
 	routes.HandleMethodNotAllowed = true
+	routes.Use(middleware.SetupLogger(cfg.Logger))
 	routes.GET("/ping", healthHandler)
 	routes.POST("/signup", handlers.Signup)
 	routes.POST("/sms", handlers.ReceiveMessage)
