@@ -1,9 +1,9 @@
 package handlers
 
 import (
+	"github.com/Deseao/messaging-server/internal/server/middleware"
 	"github.com/gin-gonic/gin"
 	"go.uber.org/zap"
-	"github.com/Deseao/messaging-server/internal/server/middleware"
 )
 
 type incomingMessage struct {
@@ -13,10 +13,13 @@ type incomingMessage struct {
 }
 
 func ReceiveMessage(c *gin.Context) {
-	//TODO Implement this
-	var request incomingMessage
-	c.Bind(&request)
 	logger := c.MustGet(middleware.LoggerKey).(*zap.Logger)
-	logger.Info("Your text arrived", zap.Any("request", request))
+	var request incomingMessage
+	err := c.Bind(&request)
+	if err != nil {
+		logger.Error("Failed to parse request", zap.Error(err))
+	} else {
+		logger.Info("Your text arrived", zap.Any("request", request))
+	}
 	c.JSON(200, nil)
 }
