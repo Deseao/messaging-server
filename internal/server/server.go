@@ -8,6 +8,8 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"go.uber.org/zap"
+
+	"github.com/Deseao/messaging-server/internal/server/handlers"
 )
 
 type Config struct {
@@ -29,7 +31,9 @@ func New(cfg *Config) *Server {
 	routes := gin.New()
 	//TODO: Gin.Recovery
 	routes.HandleMethodNotAllowed = true
-	routes.GET("ping", healthHandler)
+	routes.GET("/ping", healthHandler)
+	routes.POST("/signup", handlers.Signup)
+	routes.POST("/sms", handlers.ReceiveMessage)
 	return &Server{
 		server: &http.Server{
 			Addr:           cfg.Accept + ":" + cfg.Port,
