@@ -21,8 +21,8 @@ var (
 )
 
 type Config struct {
-	Logger Logger
-	Server Server
+	Logger    Logger
+	Server    Server
 	FreeClimb FreeClimb
 }
 
@@ -41,8 +41,8 @@ type Server struct {
 type FreeClimb struct {
 	AccountId string
 	AuthToken string
-	From string
-	To string
+	From      string
+	To        string
 }
 
 func New() *Config {

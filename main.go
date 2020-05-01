@@ -7,10 +7,10 @@ import (
 	"time"
 
 	"github.com/Deseao/messaging-server/internal/config"
+	"github.com/Deseao/messaging-server/internal/send_message"
 	"github.com/Deseao/messaging-server/internal/server"
 	"github.com/SpiderOak/errstack"
 	"go.uber.org/zap"
-	"github.com/Deseao/messaging-server/internal/send_message"
 )
 
 func main() {
