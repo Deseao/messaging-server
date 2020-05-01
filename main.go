@@ -10,6 +10,7 @@ import (
 	"github.com/Deseao/messaging-server/internal/server"
 	"github.com/SpiderOak/errstack"
 	"go.uber.org/zap"
+	"github.com/Deseao/messaging-server/internal/send_message"
 )
 
 func main() {
@@ -31,6 +32,8 @@ func main() {
 		Accept:     cfg.Server.Accept,
 		Port:       cfg.Server.Port,
 	}
+
+	send_message.SendMessage(cfg.FreeClimb.AccountId, cfg.FreeClimb.AuthToken, cfg.FreeClimb.From, cfg.FreeClimb.To)
 
 	s := StartServer(serverCfg, cfg.Server.Secure, cfg.Server.CertFile, cfg.Server.KeyFile)
 

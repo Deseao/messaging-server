@@ -23,6 +23,7 @@ var (
 type Config struct {
 	Logger Logger
 	Server Server
+	FreeClimb FreeClimb
 }
 
 type Logger struct {
@@ -36,6 +37,12 @@ type Server struct {
 	Secure   bool
 	CertFile string
 	KeyFile  string
+}
+type FreeClimb struct {
+	AccountId string
+	AuthToken string
+	From string
+	To string
 }
 
 func New() *Config {
@@ -72,6 +79,11 @@ func InitConfig(appName string) (*Config, error) {
 	cfg.Server.Secure = vpr.GetBool("server.secure")
 	cfg.Server.CertFile = vpr.GetString("server.certFile")
 	cfg.Server.KeyFile = vpr.GetString("server.keyFile")
+
+	cfg.FreeClimb.AccountId = vpr.GetString("freeclimb.accountId")
+	cfg.FreeClimb.AuthToken = vpr.GetString("freeclimb.authToken")
+	cfg.FreeClimb.From = vpr.GetString("freeclimb.from")
+	cfg.FreeClimb.To = vpr.GetString("freeclimb.to")
 
 	err = validateConfig(cfg)
 	if err != nil {
