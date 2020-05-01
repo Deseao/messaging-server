@@ -9,8 +9,13 @@ import (
 	"github.com/Deseao/messaging-server/internal/config"
 	"github.com/Deseao/messaging-server/internal/messaging"
 	"github.com/Deseao/messaging-server/internal/server"
+	"github.com/Deseao/messaging-server/internal/state"
 	"github.com/SpiderOak/errstack"
 	"go.uber.org/zap"
+)
+
+var (
+	GlobalState *state.State
 )
 
 func main() {
@@ -25,12 +30,16 @@ func main() {
 	defer logger.Sync() //nolint //Don't care about error from this since it happens even when things are fine
 	logger.Info("logger initialized", zap.Bool("production", cfg.Logger.Production), zap.String("level", cfg.Logger.Level))
 
+	logger.Info("Initializing subscriber list")
+	GlobalState = state.MakeGlobalState()
+
 	logger.Info("initializing server...", zap.String("acceptAddr", cfg.Server.Accept), zap.String("port", cfg.Server.Port), zap.Bool("https", cfg.Server.Secure))
 	serverCfg := &server.Config{
 		Production: cfg.Logger.Production,
 		Logger:     logger,
 		Accept:     cfg.Server.Accept,
 		Port:       cfg.Server.Port,
+		State:      GlobalState,
 	}
 
 	messaging.Send(cfg.FreeClimb.AccountID, cfg.FreeClimb.AuthToken, cfg.FreeClimb.From, cfg.FreeClimb.To)
