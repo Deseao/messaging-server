@@ -18,7 +18,7 @@ func Send(accountID, authToken, fromNumber, toNumber string) {
 	payload := smsMessage{
 		From: fromNumber,
 		To:   toNumber,
-		Text: "Hey this is freeclimb what's up",
+		Text: "Wash your hands!",
 	}
 
 	byts, err := json.Marshal(payload)
