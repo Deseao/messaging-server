@@ -9,7 +9,7 @@ const LoggerKey string = "logger"
 
 func SetupLogger(logger *zap.Logger) gin.HandlerFunc {
 	return func(c *gin.Context) {
-			requestLog := logger.With(zap.String("path", c.Request.URL.Path), zap.String("method", c.Request.Method))
-			c.Set(LoggerKey, requestLog)
+		requestLog := logger.With(zap.String("path", c.Request.URL.Path), zap.String("method", c.Request.Method))
+		c.Set(LoggerKey, requestLog)
 	}
 }
