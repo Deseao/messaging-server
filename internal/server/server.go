@@ -8,7 +8,7 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"go.uber.org/zap"
-
+	"github.com/gin-contrib/cors"
 	"github.com/Deseao/messaging-server/internal/server/handlers"
 	"github.com/Deseao/messaging-server/internal/server/middleware"
 	"github.com/Deseao/messaging-server/internal/state"
@@ -34,6 +34,14 @@ func New(cfg *Config) *Server {
 	routes := gin.New()
 	//TODO: Gin.Recovery
 	routes.HandleMethodNotAllowed = true
+	routes.Use(cors.New(cors.Config{
+		AllowOrigins:     []string{"*"},
+		AllowMethods:     []string{"PUT", "PATCH", "POST"},
+		AllowHeaders:     []string{"Origin"},
+		ExposeHeaders:    []string{"Content-Length"},
+		AllowCredentials: true,
+		MaxAge: 12 * time.Hour,
+	}))
 	routes.Use(middleware.SetupLogger(cfg.Logger))
 	routes.Use(middleware.AddToContext("state", cfg.State))
 	routes.GET("/ping", healthHandler)
