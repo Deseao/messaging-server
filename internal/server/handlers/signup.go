@@ -18,11 +18,11 @@ func Signup(c *gin.Context) {
 	state := c.MustGet("state").(*state.State)
 	logger := c.MustGet(middleware.LoggerKey).(*zap.Logger)
 	var payload SignupPayload
-	err := c.Bind(&payload)
+	err := c.BindJSON(&payload)
 	if err != nil {
 		logger.Error("Failed to bind signup payload", zap.Error(err))
 	}
 	state.AddSubscriber(payload.Number)
 	logger.Info("Signup completed", zap.Any("subscribers", state.Subscribers))
-	c.JSON(http.StatusNotImplemented, nil)
+	c.JSON(http.StatusOK, nil)
 }
