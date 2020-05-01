@@ -8,3 +8,9 @@
     secure = false
     certFile = ""
     keyFile = ""
+
+[freeclimb]
+    accountId = ""
+    authToken = ""
+    from = ""
+    to = ""
