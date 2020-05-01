@@ -1,23 +1,23 @@
-package send_message
+package messaging
 
 import (
-	"net/http"
+	"bytes"
 	"encoding/json"
 	"fmt"
-	"bytes"
 	"io/ioutil"
+	"net/http"
 )
 
 type smsMessage struct {
 	From string `json:"from"`
-	To string `json:"to"`
+	To   string `json:"to"`
 	Text string `json:"text"`
 }
 
-func SendMessage(accountId, authToken, fromNumber, toNumber string) {
+func Send(accountID, authToken, fromNumber, toNumber string) {
 	payload := smsMessage{
 		From: fromNumber,
-		To: toNumber,
+		To:   toNumber,
 		Text: "Hey this is freeclimb what's up",
 	}
 
@@ -28,13 +28,13 @@ func SendMessage(accountId, authToken, fromNumber, toNumber string) {
 
 	reader := bytes.NewReader(byts)
 
-	newRequest, err := http.NewRequest(http.MethodPost, "https://www.freeclimb.com/apiserver/Accounts/" + accountId + "/Messages", reader)
+	newRequest, err := http.NewRequest(http.MethodPost, "https://www.freeclimb.com/apiserver/Accounts/"+accountID+"/Messages", reader)
 	if err != nil {
 		fmt.Println("error:", err)
 	}
 
 	newRequest.Header.Add("Content-Type", "application/json")
-	newRequest.SetBasicAuth(accountId, authToken)
+	newRequest.SetBasicAuth(accountID, authToken)
 
 	rsp, err := http.DefaultClient.Do(newRequest)
 	if err != nil {

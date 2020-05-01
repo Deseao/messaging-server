@@ -21,8 +21,8 @@ var (
 )
 
 type Config struct {
-	Logger Logger
-	Server Server
+	Logger    Logger
+	Server    Server
 	FreeClimb FreeClimb
 }
 
@@ -39,10 +39,10 @@ type Server struct {
 	KeyFile  string
 }
 type FreeClimb struct {
-	AccountId string
+	AccountID string
 	AuthToken string
-	From string
-	To string
+	From      string
+	To        string
 }
 
 func New() *Config {
@@ -80,7 +80,7 @@ func InitConfig(appName string) (*Config, error) {
 	cfg.Server.CertFile = vpr.GetString("server.certFile")
 	cfg.Server.KeyFile = vpr.GetString("server.keyFile")
 
-	cfg.FreeClimb.AccountId = vpr.GetString("freeclimb.accountId")
+	cfg.FreeClimb.AccountID = vpr.GetString("freeclimb.accountId")
 	cfg.FreeClimb.AuthToken = vpr.GetString("freeclimb.authToken")
 	cfg.FreeClimb.From = vpr.GetString("freeclimb.from")
 	cfg.FreeClimb.To = vpr.GetString("freeclimb.to")

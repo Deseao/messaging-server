@@ -7,10 +7,10 @@ import (
 	"time"
 
 	"github.com/Deseao/messaging-server/internal/config"
+	"github.com/Deseao/messaging-server/internal/messaging"
 	"github.com/Deseao/messaging-server/internal/server"
 	"github.com/SpiderOak/errstack"
 	"go.uber.org/zap"
-	"github.com/Deseao/messaging-server/internal/send_message"
 )
 
 func main() {
@@ -33,7 +33,7 @@ func main() {
 		Port:       cfg.Server.Port,
 	}
 
-	send_message.SendMessage(cfg.FreeClimb.AccountId, cfg.FreeClimb.AuthToken, cfg.FreeClimb.From, cfg.FreeClimb.To)
+	messaging.Send(cfg.FreeClimb.AccountID, cfg.FreeClimb.AuthToken, cfg.FreeClimb.From, cfg.FreeClimb.To)
 
 	s := StartServer(serverCfg, cfg.Server.Secure, cfg.Server.CertFile, cfg.Server.KeyFile)
 
