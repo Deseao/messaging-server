@@ -13,3 +13,9 @@ func SetupLogger(logger *zap.Logger) gin.HandlerFunc {
 		c.Set(LoggerKey, requestLog)
 	}
 }
+
+func AddToContext(key string, value interface{}) gin.HandlerFunc {
+	return func(c *gin.Context) {
+		c.Set(key, value)
+	}
+}

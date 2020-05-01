@@ -11,6 +11,7 @@ import (
 
 	"github.com/Deseao/messaging-server/internal/server/handlers"
 	"github.com/Deseao/messaging-server/internal/server/middleware"
+	"github.com/Deseao/messaging-server/internal/state"
 )
 
 type Config struct {
@@ -18,6 +19,7 @@ type Config struct {
 	Logger     *zap.Logger
 	Accept     string
 	Port       string
+	State      *state.State
 }
 
 type Server struct {
@@ -33,6 +35,7 @@ func New(cfg *Config) *Server {
 	//TODO: Gin.Recovery
 	routes.HandleMethodNotAllowed = true
 	routes.Use(middleware.SetupLogger(cfg.Logger))
+	routes.Use(middleware.AddToContext("state", cfg.State))
 	routes.GET("/ping", healthHandler)
 	routes.POST("/signup", handlers.Signup)
 	routes.POST("/sms", handlers.ReceiveMessage)
