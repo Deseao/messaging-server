@@ -1,0 +1,10 @@
+[logger]
+    production = false
+    level = "debug"
+
+[server]
+    accept = "0.0.0.0"
+    port = "8080"
+    secure = false
+    certFile = ""
+    keyFile = ""
